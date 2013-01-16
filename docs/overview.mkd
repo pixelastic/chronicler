@@ -1,0 +1,69 @@
+DISCLAIMER
+==========
+
+Chronicler is still in its very early stages, it is very far from being usable.
+
+
+OVERVIEW
+========
+
+The goal of Chronicler is to allow one to easily upload game screenshots to an
+online host, where they will then be accessible for public viewing.
+
+UPLOAD
+======
+
+The upload part must be very simple to do for the end user.
+
+Behind the scenes, all the upload will be done through a public REST API. The
+API will be one of the fundamental bricks of the app.
+
+Through the use of this common point of entry, numerous adapters will be
+developed, to allow end users to choose the upload method they prefer.
+
+Potential upload methods will then include upload by ftp, by email, by POST. 
+
+Using an API will help in the development of tools for various devices.
+
+PUBLIC DISPLAY
+==============
+
+The website will be available through a browser for a common experience of
+browsing through galleries and pictures. 
+
+The first version of the gallery will include galeries, containing pictures.
+Each picture could have an associated description and comments on individual
+pictures or albums could be enabled.
+
+All this informations will be available both through a browsing experience or
+an API returning the same informations in JSON format.
+
+DEVELOPMENT
+===========
+
+For this project I intend to "do it slow, but do it right". I'll first make
+a list of things that must appear in the project v1, map the corresponding API
+point of entry and common workflow and design a rudimentary gallery display.
+
+It is of great importance to me that I develop the API first, and the public
+visual information second so as to keep the final API simple. All my inner
+calls inside the app will go through the public API.
+
+LANGUAGES
+=========
+
+There are a number of languages I could have used to do this project, but
+I choose nodejs for two main reasons. Node can do it (obvious reason) and
+I never worked with node before, so this was a good way to learn.
+
+On a more practical note, I thought that due to the "real-time" factor of the
+system, node was a strong candidate.
+
+PROCESSES
+=========
+
+I recently discovered TDD, while learning Ruby, and I loved it. I'll apply this
+to this project as well, following my idea of "doing it slow, but doing it
+right".
+
+
