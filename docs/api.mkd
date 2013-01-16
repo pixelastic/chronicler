@@ -1,0 +1,138 @@
+The API will be available on `api.chronicler.com`. As API tend to evolve, and
+to provide backward compatibility, we'll provide various API version on
+`api.chronicler.com/v1`, `api.chronicler.com/v2` and so on.
+
+All calls on `api.chronicler.com` will return data in JSON format by default.
+To provide further compatibility if we ever need to return data in other
+formats, we also provide access ending with `.json` to force a data returned as
+JSON.
+
+Eg. `https://api.chronicler.com/v1/albums/` or
+`https://api.chronicler.com/v1/albums.json`.
+
+All public calls will be available through both `http` and `https` channels.
+All call necessiting an authentication will only be available through `https`.
+
+API calls should be able to specify the fields they want returned by prepending
+`?fields=field1,field2` to the url. If such a `fields` parameter is supplied,
+only those fields will be returned. If no `fields` is supplied, a default list
+of fields will be returned, depending on the ressource asked.
+
+	TODO : How to select the `order_by` used to return list of items ? `order_by`
+	and `order_asc` ? `order_asc` or `order_desc` ? Obviously we need a way to
+	define the field used to make the sort, as well as the ASC/DESC.
+
+	TODO : We should also provide a way to limit the number of results. Should it
+	be `limit` and `page` ? We need to be able to paginate data easily and return
+	in the response links to the next and previous page of data.
+
+	TODO : We should also provide a way to send a batch of requests in one go, to
+	avoid sending numerous requests and thus limiting bandwith usage. Which would
+	be the best syntax for that ? An array of urls ? A hash of urls, with
+	custom-made labels ? Should all calls have the same authentication or should
+	the authentication be done for each call ?
+
+All GET calls made on `api.chronicler.com/v1/` should have a matching call on
+`www.chronicler.com` to display the same ressource, in an HTML way.
+
+All API calls will follow the same logic. `GET` access will return JSON data.
+`GET` access on plural nouns will return a list (eg. `GET /albums/`), while
+`GET` access on plural noun + id will return data of this special item (eg.
+`GET /albums/12345`.
+
+When requesting a list of items that contain sub-items (like `albums`
+containing `pictures`), the convention is to not return the list of sub-items.
+If you need those sub-items, you'll have to specify a custom `fields` params.
+
+When requesting one item that does contain a list of sub-items (like one
+`album` containing `pictures`), the convention is to return the list of
+sub-items. 
+If you do not need those sub-items, you'll have to specify a custom `fields`
+params.
+
+The logic behind this convention is that when requesting a top-level list you
+usually do not need the inner content, while when you request data about
+a specific item, you want as much data as you can. The custom `fields` params
+always let you fine-tune what you want returned in both cases.
+
+Also, a specific API end-point is available if you only want access to the
+sub-items of a specific item.
+
+When editing an item through `POST`, you need to pass the list of fields you
+want edited. If a field is not present, it will not be updated. If one of the
+passed fields is not valid, no fields will be edited at all.
+
+The `uuid` field of all items cannot be updated through the API.
+
+
+
+
+ALBUMS
+======
+
+`albums` contains `pictures`. They all have a `uuid` to uniquely identify them.
+We will also use a `created` field to hold the creation date.
+
+	TODO : They might also need a "label", used for more easily finding and
+	a more readable url.
+
+	TODO : Should albums have a description too ? And should we enable comments
+	on them ?
+
+	TODO : Should we have a `modified` field as well ? Should it be updated
+	whenever a sub-pictures is added/edited/deleted ?
+
+`GET /albums/` will return the list of albums.
+	
+`GET /albums/12345/` will return data about an album, including pictures.
+
+`GET /albums/12345/pictures/` will return `pictures` included in the album.
+
+`PUT /albums/` will add a new album to the list.
+
+`DELETE /albums/12345` will delete the specific album.
+	
+	TODO : Should deleting an album delete its pictures or should they be moved
+	to a "warp zone" ? Should this be an option ?
+
+`DELETE /albums/12345/pictures` will delete all pictures of the specific album
+
+`DELETE /albums/` will do nothing. If you want to delete all your albums,
+you'll have to delete them one by one.
+
+`POST /albums/12345/` will allow editing of the specific album details.
+
+`PUT /albums/12345/pictures/` will add a picture to the specific album.
+
+`GET /albums/12345/pictures/12345/` will return data about the picture 12345
+only if it is in the specified album.
+
+`DELETE /albums/12345/pictures/12345` will delete the specified picture only if
+it is in the specified album.
+
+`POST /albums/12345/pictures/12345` will edit the specified picture only if it
+is in the specified album.
+
+
+PICTURES
+========
+
+Each `picture` is bound to an album. Each picture contains a `path` field
+pointing to the file on disk, as well as `created` field. They also have
+a `description` field.
+
+`GET /pictures/` will return a list of all pictures. 
+
+`GET /pictures/123456` will return data about the specific picture.
+
+`PUT /pictures/` will add a new picture to the list. You must then specify the
+matching album.
+
+`DELETE /pictures/` will do nothing, you need to manually delete pictures one
+by one.
+
+`DELETE /pictures/12345` will delete the specified picture.
+
+`POST /pictures/12345` will edit the specified picture.
+	 
+

@@ -16,6 +16,7 @@ FUTURE VERSIONS
 - Choose which fields to return on the calls
 - Choose which fields used to order the return of lists
 - Group several API calls in one
+- Make the public browsing url-friendly
 
 - Display albums and pictures
 - Add comments on pictures
