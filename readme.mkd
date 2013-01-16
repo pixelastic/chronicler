@@ -1,0 +1,6 @@
+Chronicler is a local web app you can install on your server and that keeps
+track and display a list of pictures ordered by albums.
+
+Its development is aimed at dealing with game screenshots but might be extended
+for a more general purpose.
+
