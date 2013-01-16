@@ -1,0 +1,25 @@
+VERSION 1
+=========
+
+- A working API to :
+	- Add/delete/list albums
+	- Add/delete/edit/list pictures
+
+
+
+FUTURE VERSIONS
+===============
+
+- Authenticate calls to API
+- Cache calls to API
+- Resize/optimize images
+- Choose which fields to return on the calls
+- Choose which fields used to order the return of lists
+- Group several API calls in one
+
+- Display albums and pictures
+- Add comments on pictures
+- Allow uploading through FTP
+- Allow uploading through email
+
+
